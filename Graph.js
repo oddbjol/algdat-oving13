@@ -165,24 +165,49 @@ class Graph{
                 num_visited++;
         return num_visited;
     }
+
+    closestNode(lat,long){
+        let search_node = new MyNode(0,lat,long);
+        let lowest_dist_found = Number.MAX_SAFE_INTEGER;
+        let closest_node_found = null;
+        for(let node of this.nodes){
+            let dist = search_node.distanceTo(node);
+            if(dist < lowest_dist_found){
+                lowest_dist_found = dist;
+                closest_node_found = node;
+            }
+        }
+        return closest_node_found;
+    }
 }
 
 
 function main(){
 
-    let g2 = new Graph("albania-noder.txt","albania-kanter.txt", function(){
+    console.time("read files");
+
+    let g = new Graph("noder.txt","kanter.txt", function(){
+
+        console.timeEnd("read files");
+
+        console.time("find closest nodes");
+
+        let from_id = g.closestNode(67.2803556,14.404915999999957).id;
+        let to_id = g.closestNode(63.4305149, 10.39505280000003).id;
+
+        console.timeEnd("find closest nodes");
 
         console.time("djikstra");
-        let path_djikstra = g2.djikstra(41621, 11342);
+        let path_djikstra = g.djikstra(from_id, to_id);
         console.timeEnd("djikstra");
 
         console.time("astar");
-        let path_astar = g2.AStar(41621, 11342);
+        let path_astar = g.AStar(from_id, to_id);
         console.timeEnd("astar");
 
         console.log("\nare the paths the same? " + _.isEqual(path_djikstra,path_astar) + "\n");
         console.log("Here is the path: \n");
-        console.log(Graph.pathToString(path_djikstra));
+        fs.writeFileSync("out.txt",Graph.pathToString(path_djikstra),"utf8");
 
     });
 }
