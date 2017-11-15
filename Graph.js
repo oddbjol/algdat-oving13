@@ -154,7 +154,7 @@ class Graph{
         for(let node of this.nodes){
             node.dist = Number.MAX_SAFE_INTEGER;
             node.parent = null;
-            this.visited = false;
+            node.visited = false;
         }
     }
 
