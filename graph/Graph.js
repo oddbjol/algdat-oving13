@@ -90,10 +90,10 @@ class Graph{
 
         this._reset();
 
-        let root_node = this.nodes[to_node_id];
+        let root_node = this.nodes[from_node_id];
         root_node.dist = 0;
 
-        let target_node = this.nodes[from_node_id];
+        let target_node = this.nodes[to_node_id];
 
         let queue = new goog.structs.PriorityQueue();
 
@@ -125,8 +125,8 @@ class Graph{
 
         this._reset();
 
-        let root_node = this.nodes[to_node_id];
-        let target_node = this.nodes[from_node_id];
+        let root_node = this.nodes[from_node_id];
+        let target_node = this.nodes[to_node_id];
         root_node.dist = 0;
 
         let queue = new goog.structs.PriorityQueue();
@@ -156,20 +156,12 @@ class Graph{
 
     static _getPath(target_node){
         let path = [];
-        path.push(target_node.latlong);
         let cur_node = target_node;
-        while(cur_node.parent){
-            path.push(cur_node.parent.latlong);
+        while(cur_node){
+            path.push(cur_node.latlong);
             cur_node = cur_node.parent;
         }
-        return path.reverse();
-    }
-
-    static pathToString(path){
-        let out = "";
-        for(let node of path)
-            out += node.lat + "," + node.long + "\n";
-        return out;
+        return path;
     }
 
     _reset(){
