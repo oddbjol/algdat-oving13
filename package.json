@@ -2,8 +2,9 @@
   "name": "oving13",
   "version": "1.0.0",
   "description": "",
-  "main": "AStar.js",
+  "main": "rest/restserver.js",
   "scripts": {
+    "start": "node rest/restserver.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
