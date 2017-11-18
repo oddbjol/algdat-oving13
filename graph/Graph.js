@@ -4,6 +4,7 @@ let fs = require("fs");
 let readline = require("readline");
 
 let MyNode = require("./MyNode");
+let Edge = require("./Edge");
 
 goog.require('goog.structs.PriorityQueue');
 
@@ -20,11 +21,11 @@ class Graph{
             return;
 
         console.log("reading node file " + node_file);
-
+        console.time("read node file");
         let lineReader = readline.createInterface({input: fs.createReadStream(node_file)});
         lineReader.on('line', function(line){
             // Read in nodes
-            let elements = line.trim().split(/\s+/);
+            let elements = line.split(' ');
             if(elements.length == 1)
                 return;
 
@@ -35,30 +36,35 @@ class Graph{
         });
         lineReader.on('close',function(){
 
+            console.timeEnd("read node file");
+            console.time("read edge file");
+
             console.log("reading edge file " + edge_file);
 
             let lineReader2 = readline.createInterface({input: fs.createReadStream(edge_file)});
 
             lineReader2.on('line', function(line){
                 // Read in edges
-                let elements = line.trim().split(/\s+/);
+                let elements = line.split(' ');
                 if(elements.length == 1)
                     return;
 
                 let from = parseInt(elements[0]);
                 let to = parseInt(elements[1]);
                 let weight = parseInt(elements[2]);
-                _this.addEdge(from, to, weight);
+                _this.nodes[from].edges.push(new Edge(weight, _this.nodes[to]));
             });
 
             lineReader2.on('close',function(){
+
+                console.timeEnd("read edge file");
 
                 let lineReader3 = readline.createInterface({input: fs.createReadStream(poi_file)});
 
                 console.log('reading poi file ' + poi_file);
 
                 lineReader3.on('line', function(line){
-                    let elements = line.trim().split(/\s+/);
+                    let elements = line.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
                     if(elements.length == 1)
                         return;
 
@@ -77,10 +83,6 @@ class Graph{
 
     addNode(id, lat, long){
         this.nodes[id] = new MyNode(id, lat, long);
-    }
-
-    addEdge(from_id, to_id, weight){
-        this.nodes[from_id].addEdge(weight, this.nodes[to_id]);
     }
 
     djikstra(from_node_id, to_node_id){
@@ -213,37 +215,6 @@ class Graph{
         console.log("finding index of " + name + " => " + id);
         return id ? id : -1;
     }
-}
-
-
-function main(){
-
-    console.time("read files");
-
-    let g = new Graph("noder.txt","kanter.txt", function(){
-
-        console.timeEnd("read files");
-
-        console.time("find closest nodes");
-
-        let from_id = g.closestNode(67.2803556,14.404915999999957).id;
-        let to_id = g.closestNode(63.4305149, 10.39505280000003).id;
-
-        console.timeEnd("find closest nodes");
-
-        console.time("djikstra");
-        let path_djikstra = g.djikstra(from_id, to_id);
-        console.timeEnd("djikstra");
-
-        console.time("astar");
-        let path_astar = g.AStar(from_id, to_id);
-        console.timeEnd("astar");
-
-        console.log("\nare the paths the same? " + _.isEqual(path_djikstra,path_astar) + "\n");
-        console.log("Here is the path: \n");
-        fs.writeFileSync("out.txt",Graph.pathToString(path_djikstra),"utf8");
-
-    });
 }
 
 module.exports = Graph;
