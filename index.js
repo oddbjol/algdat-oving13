@@ -22,6 +22,8 @@ $("#findpath").click(function(){
     let to_name = $("#to_name").val();
     let to_lat = $("#to_lat").val();
     let to_long = $("#to_long").val();
+
+    let method = $("input[name='method']:checked").val();
     
     let from,to;
 
@@ -41,7 +43,7 @@ $("#findpath").click(function(){
     $.ajax({
         type: "POST",
         url: 'http://localhost/rest/getpath',
-        data: JSON.stringify({from: from, to: to}),
+        data: JSON.stringify({from: from, to: to, method: method}),
         contentType: 'application/json',
         dataType: 'text',
         success: function(data_orig){
@@ -51,7 +53,7 @@ $("#findpath").click(function(){
             resetMap();
 
             let infostring =    "jumps : " + data.path.length + "<br>";
-            infostring +=       "djikstra/AStar are equal: " + data.pathsAreEqual + "<br>";
+            infostring +=       "method used: " + method + "<br>";
 
             result_popup = L.popup({autoClose: false, closeOnClick: false}).setLatLng(data.path[0]).setContent(infostring);
             map.addLayer(result_popup);
