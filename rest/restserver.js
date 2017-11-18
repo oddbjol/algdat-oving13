@@ -1,4 +1,5 @@
 let restify = require("restify");
+let _ = require("lodash");
 let Graph = require("../graph/Graph");
 
 let server = restify.createServer();
@@ -55,8 +56,12 @@ server.post('rest/getpath',function(req, res, next){
     if(from_index < 0 || to_index < 0)
         return next(false);
 
-    let path = g.AStar(from_index, to_index);
-    res.send(path);
+    let path_astar = g.AStar(from_index, to_index);
+    let path_djikstra = g.djikstra(from_index, to_index);
+
+    let pathsAreEqual =  _.isEqual(path_djikstra,path_astar);
+
+    res.send({path: path_astar, pathsAreEqual: pathsAreEqual});
     return next();
 });
 

@@ -50,14 +50,15 @@ $("#findpath").click(function(){
 
             resetMap();
 
-            let infostring = "jumps : " + data.length;
+            let infostring =    "jumps : " + data.path.length + "<br>";
+            infostring +=       "djikstra/AStar are equal: " + data.pathsAreEqual + "<br>";
 
-            result_popup = L.popup({autoClose: false, closeOnClick: false}).setLatLng(data[0]).setContent(infostring);
+            result_popup = L.popup({autoClose: false, closeOnClick: false}).setLatLng(data.path[0]).setContent(infostring);
             map.addLayer(result_popup);
 
             if(path_line)
                 map.removeLayer(path_line);
-            path_line = L.polyline(data, {color: 'blue'});
+            path_line = L.polyline(data.path, {color: 'blue'});
             map.addLayer(path_line);
         },
         error: function(bleh, ex){

@@ -112,7 +112,7 @@ class Graph{
             }
         }
 
-        console.log("visited with djikstra: " + this._nodesVisited());
+        console.log("visited with djikstra: " + this.nodesVisited());
 
         console.log(target_node.dist*100 + " seconds.");
 
@@ -150,7 +150,7 @@ class Graph{
             }
         }
 
-        console.log("visited with AStar: " + this._nodesVisited());
+        console.log("visited with AStar: " + this.nodesVisited());
 
         console.log(target_node.dist*100 + " seconds.");
 
@@ -183,7 +183,7 @@ class Graph{
         }
     }
 
-    _nodesVisited(){
+    nodesVisited(){
         let num_visited = 0;
         for(let node of this.nodes)
             if(node.visited)
