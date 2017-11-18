@@ -1,6 +1,8 @@
 let restify = require("restify");
 let Graph = require("../graph/Graph");
 
+let argv = process.argv.slice(2);
+
 let server = restify.createServer();
 
 let g; // the graph
@@ -17,7 +19,12 @@ const CONFIG_DEBUG = {
     pointsOfInterest: 'graph/albania-interessepkt.txt'
 };
 
-const CONFIG = CONFIG_DEBUG;
+let CONFIG;
+
+if(argv[0] == 'debug')
+    CONFIG = CONFIG_DEBUG;
+else
+    CONFIG = CONFIG_PROD;
 
 const corsMiddleware = require('restify-cors-middleware');
 
