@@ -108,8 +108,8 @@ class Graph{
 
             for(let edge of node.edges){
                 let neighbour = edge.target;
-                if(+node.dist + +edge.weight < neighbour.dist){
-                    neighbour.dist = +node.dist + +edge.weight;
+                if(node.dist + edge.weight < neighbour.dist){
+                    neighbour.dist = node.dist + edge.weight;
                     neighbour.parent = node;
                     neighbour.visited = true;
                     queue.enqueue(neighbour.dist, neighbour);
@@ -142,8 +142,8 @@ class Graph{
 
             for(let edge of node.edges){
                 let neighbour = edge.target;
-                if(+node.dist + +edge.weight < neighbour.dist){
-                    neighbour.dist = +node.dist + +edge.weight;
+                if(node.dist + edge.weight < neighbour.dist){
+                    neighbour.dist = node.dist + edge.weight;
                     neighbour.parent = node;
                     neighbour.visited = true;
                     queue.enqueue(neighbour.dist + neighbour.distanceTo(target_node), neighbour);
