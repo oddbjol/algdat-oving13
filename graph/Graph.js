@@ -19,7 +19,7 @@ class Graph{
         if (!node_file || !edge_file || !poi_file)
             return;
 
-        console.log("reading node file" + node_file);
+        console.log("reading node file " + node_file);
 
         let lineReader = readline.createInterface({input: fs.createReadStream(node_file)});
         lineReader.on('line', function(line){
@@ -206,9 +206,9 @@ class Graph{
     }
 
     indexOfName(name){
-        console.log("finding index of " + name + " = " + this.pointsOfInterest[name]);
-        let out = this.pointsOfInterest['"' + name + '"'];
-        return out ? out : -1;
+        let id = this.pointsOfInterest['"' + name + '"'];
+        console.log("finding index of " + name + " => " + id);
+        return id ? id : -1;
     }
 }
 

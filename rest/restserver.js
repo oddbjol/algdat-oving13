@@ -65,13 +65,18 @@ server.post('rest/getpath',function(req, res, next){
 
     let path;
 
+    let time = process.hrtime();
+
     if(method == 'djikstra')
         path = g.djikstra(from_index, to_index);
     else if(method == 'astar')
         path = g.AStar(from_index, to_index);
     else return next(false);
 
-    res.send({path: path, nodesVisited: g.nodesVisited()});
+    time = process.hrtime(time);
+    time = parseFloat(time.toString().replace(',','.')).toFixed(3);
+
+    res.send({path: path, nodesVisited: g.nodesVisited(), time: time});
     return next();
 });
 
