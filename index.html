@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Øving 13</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin=""/>
+    <style>
+        #map { height: 500px; }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+            integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+            crossorigin="">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+</head>
+<body>
+<div id="map"></div>
+from:<br/>
+<input type="text" id="from_lat" placeholder="lat" value="41.3196118"/>
+<input type="text" id="from_long" placeholder="long" value="19.8086058" />
+<br/>to:<br/>
+<input type="text" id="to_lat" placeholder="lat" value="41.3595948"/>
+<input type="text" id="to_long" placeholder="long" value="19.9767086"/>
+<br>
+<input type="button" id="findpath" value="find path!">
+<script src="index.js"></script>
+</body>
+</html>

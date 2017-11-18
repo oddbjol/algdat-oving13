@@ -72,6 +72,8 @@ class Graph{
         let root_node = this.nodes[root_node_id];
         root_node.dist = 0;
 
+        let target_node = this.nodes[target_node_id];
+
         let queue = new goog.structs.PriorityQueue();
 
         queue.enqueue(root_node.dist, root_node);
@@ -93,7 +95,9 @@ class Graph{
 
         console.log("visited with djikstra: " + this._nodesVisited());
 
-        return Graph._getPath(this.nodes[target_node_id]);
+        console.log(target_node.dist*100 + " seconds.");
+
+        return Graph._getPath(target_node);
     }
 
     AStar(root_node_id, target_node_id){
@@ -129,15 +133,17 @@ class Graph{
 
         console.log("visited with AStar: " + this._nodesVisited());
 
+        console.log(target_node.dist*100 + " seconds.");
+
         return Graph._getPath(this.nodes[target_node_id]);
     }
 
     static _getPath(target_node){
         let path = [];
-        path.push(target_node);
+        path.push(target_node.latlong);
         let cur_node = target_node;
         while(cur_node.parent){
-            path.push(cur_node.parent);
+            path.push(cur_node.parent.latlong);
             cur_node = cur_node.parent;
         }
         return path.reverse();
@@ -179,6 +185,14 @@ class Graph{
         }
         return closest_node_found;
     }
+
+    indexOf(lat,long){
+        for(let i = 0; i < this.nodes.length; i++){
+            if(lat == this.nodes[i].lat && long == this.nodes[i].long)
+                return i;
+        }
+        return -1;
+    }
 }
 
 
@@ -211,7 +225,5 @@ function main(){
 
     });
 }
-
-main();
 
 module.exports = Graph;

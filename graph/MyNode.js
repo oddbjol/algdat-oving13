@@ -26,6 +26,11 @@ class MyNode {
         return this.lat + "," + this.long;
     }
 
+    get latlong() {
+        return [this.lat, this.long];
+    }
+
+
     //Jordens radius er 6371 km, høyeste fartsgrense 110km/t, 3600 sek/time
     //For å få hundredels sekunder: 2*6371/110*3600*100 = 41701090.90909090909090909091
 
