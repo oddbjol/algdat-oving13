@@ -212,6 +212,12 @@ class Graph{
         }
         return -1;
     }
+
+    indexOfName(name){
+        console.log("finding index of " + name + " = " + this.pointsOfInterest[name]);
+        let out = this.pointsOfInterest['"' + name + '"'];
+        return out ? out : -1;
+    }
 }
 
 

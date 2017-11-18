@@ -25,10 +25,23 @@ $("#findpath").click(function(){
     
     let from,to;
 
+    if(from_lat && from_long && to_lat && to_long) {
+        from = [from_lat, from_long];
+        to = [to_lat, to_long];
+    }
+    else if(from_name && to_name){
+        from = from_name;
+        to = to_name;
+    }
+    else{
+        alert('invalid input');
+        return;
+    }
+
     $.ajax({
         type: "POST",
         url: 'http://localhost/rest/getpath',
-        data: JSON.stringify({from: markerPoints[0], to: markerPoints[1]}),
+        data: JSON.stringify({from: from, to: to}),
         contentType: 'application/json',
         dataType: 'text',
         success: function(data_orig){

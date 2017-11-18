@@ -41,14 +41,19 @@ server.post('rest/getpath',function(req, res, next){
     let from = req.body.from;
     let to = req.body.to;
 
-    let from_index = g.indexOf(from[0],from[1]);
-    let to_index = g.indexOf(to[0],to[1]);
+    let from_index, to_index;
+
+    if(Array.isArray(from) && Array.isArray(to)){
+        from_index = g.indexOf(from[0],from[1]);
+        to_index = g.indexOf(to[0],to[1]);
+    }
+    else{
+        from_index = g.indexOfName(from);
+        to_index = g.indexOfName(to);
+    }
 
     if(from_index < 0 || to_index < 0)
         return next(false);
-
-    console.log("from: " + from_index);
-    console.log("to: " + to_index);
 
     let path = g.AStar(from_index, to_index);
     res.send(path);
