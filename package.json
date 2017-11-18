@@ -4,7 +4,7 @@
   "description": "",
   "main": "rest/restserver.js",
   "scripts": {
-    "start": "node rest/restserver.js",
+    "start": "node --max-old-space-size=8192 rest/restserver.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
