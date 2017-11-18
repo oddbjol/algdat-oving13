@@ -64,7 +64,7 @@ server.post('rest/getpath',function(req, res, next){
         path = g.AStar(from_index, to_index);
     else return next(false);
 
-    res.send({path: path});
+    res.send({path: path, nodesVisited: g.nodesVisited()});
     return next();
 });
 

@@ -112,10 +112,6 @@ class Graph{
             }
         }
 
-        console.log("visited with djikstra: " + this.nodesVisited());
-
-        console.log(target_node.dist*100 + " seconds.");
-
         return Graph._getPath(target_node);
     }
 
@@ -150,11 +146,7 @@ class Graph{
             }
         }
 
-        console.log("visited with AStar: " + this.nodesVisited());
-
-        console.log(target_node.dist*100 + " seconds.");
-
-        return Graph._getPath(this.nodes[from_node_id]);
+        return Graph._getPath(target_node);
     }
 
     static _getPath(target_node){

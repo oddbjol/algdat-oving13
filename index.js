@@ -52,8 +52,9 @@ $("#findpath").click(function(){
 
             resetMap();
 
-            let infostring =    "jumps : " + data.path.length + "<br>";
-            infostring +=       "method used: " + method + "<br>";
+            let infostring =    "jumps : " + data.path.length + "<br>" +
+                "method used: " + method + "<br>" +
+                "nodes visited: " + data.nodesVisited;
 
             result_popup = L.popup({autoClose: false, closeOnClick: false}).setLatLng(data.path[0]).setContent(infostring);
             map.addLayer(result_popup);
