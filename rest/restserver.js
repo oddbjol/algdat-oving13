@@ -5,6 +5,18 @@ let server = restify.createServer();
 
 let g; // the graph
 
+const CONFIG_PROD = {
+    nodes: 'graph/noder.txt',
+    edges: 'graph/kanter.txt'
+};
+
+const CONFIG_DEBUG = {
+    nodes: 'graph/albania-noder.txt',
+    edges: 'graph/albania-kanter.txt'
+};
+
+const CONFIG = CONFIG_DEBUG;
+
 const corsMiddleware = require('restify-cors-middleware');
 
 const cors = corsMiddleware({
@@ -27,8 +39,8 @@ server.post('rest/getpath',function(req, res, next){
     let from = req.body.from;
     let to = req.body.to;
 
-    let from_index = g.indexOf(from.lat,from.long);
-    let to_index = g.indexOf(to.lat,to.long);
+    let from_index = g.indexOf(from[0],from[1]);
+    let to_index = g.indexOf(to[0],to[1]);
 
     if(from_index < 0 || to_index < 0)
         return next(false);
@@ -41,10 +53,25 @@ server.post('rest/getpath',function(req, res, next){
     return next();
 });
 
+server.get('rest/getnodes',function(req,res,next){
+    let out = [];
+    for(let i = 0; i < g.nodes.length; i++)
+        out.push([g.nodes[i].lat,g.nodes[i].long]);
+    res.send(out);
+    return next();
+});
+
+server.get('rest/closestnode/:latlng',function(req,res,next){
+    let latlng = JSON.parse(req.params.latlng);
+    let closest_node = g.closestNode(latlng[0],latlng[1]);
+    res.send([closest_node.lat, closest_node.long]);
+    return next();
+});
+
 server.listen(80, function(){
     console.log("loading map data...");
 
-    g = new Graph("graph/albania-noder.txt","graph/albania-kanter.txt", function(){
+    g = new Graph(CONFIG.nodes, CONFIG.edges, function(){
         console.log("Done loading map data.");
     });
 });

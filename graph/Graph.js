@@ -64,15 +64,15 @@ class Graph{
         this.nodes[from_id].addEdge(weight, this.nodes[to_id]);
     }
 
-    djikstra(root_node_id, target_node_id){
+    djikstra(from_node_id, to_node_id){
         "use strict";
 
         this._reset();
 
-        let root_node = this.nodes[root_node_id];
+        let root_node = this.nodes[to_node_id];
         root_node.dist = 0;
 
-        let target_node = this.nodes[target_node_id];
+        let target_node = this.nodes[from_node_id];
 
         let queue = new goog.structs.PriorityQueue();
 
@@ -100,13 +100,13 @@ class Graph{
         return Graph._getPath(target_node);
     }
 
-    AStar(root_node_id, target_node_id){
+    AStar(from_node_id, to_node_id){
         "use strict";
 
         this._reset();
 
-        let root_node = this.nodes[root_node_id];
-        let target_node = this.nodes[target_node_id];
+        let root_node = this.nodes[to_node_id];
+        let target_node = this.nodes[from_node_id];
         root_node.dist = 0;
 
         let queue = new goog.structs.PriorityQueue();
@@ -135,7 +135,7 @@ class Graph{
 
         console.log(target_node.dist*100 + " seconds.");
 
-        return Graph._getPath(this.nodes[target_node_id]);
+        return Graph._getPath(this.nodes[from_node_id]);
     }
 
     static _getPath(target_node){
@@ -177,7 +177,7 @@ class Graph{
         let lowest_dist_found = Number.MAX_SAFE_INTEGER;
         let closest_node_found = null;
         for(let node of this.nodes){
-            let dist = search_node.distanceTo(node);
+            let dist = Math.sqrt(Math.pow(node.lat - search_node.lat, 2) + Math.pow(node.long - search_node.long, 2));
             if(dist < lowest_dist_found){
                 lowest_dist_found = dist;
                 closest_node_found = node;
