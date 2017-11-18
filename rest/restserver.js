@@ -8,15 +8,15 @@ let server = restify.createServer();
 let g; // the graph
 
 const CONFIG_PROD = {
-    nodes: 'graph/noder.txt',
-    edges: 'graph/kanter.txt',
-    pointsOfInterest: 'graph/interessepkt.txt'
+    nodes: 'graph/data/noder.txt',
+    edges: 'graph/data/kanter.txt',
+    pointsOfInterest: 'graph/data/interessepkt.txt'
 };
 
 const CONFIG_DEBUG = {
-    nodes: 'graph/albania-noder.txt',
-    edges: 'graph/albania-kanter.txt',
-    pointsOfInterest: 'graph/albania-interessepkt.txt'
+    nodes: 'graph/data/albania-noder.txt',
+    edges: 'graph/data/albania-kanter.txt',
+    pointsOfInterest: 'graph/data/albania-interessepkt.txt'
 };
 
 let CONFIG;
