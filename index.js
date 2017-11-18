@@ -52,7 +52,12 @@ $("#findpath").click(function(){
 
             resetMap();
 
-            let infostring =    "route duration: " + msToTime(data.path_duration_ms) + "<br>" +
+            let infostring;
+
+            if(data.path.length === 1)
+                infostring = "<p style='color:red;'>PATH NOT FOUND!</p>";
+            else
+                infostring =    "route duration: " + msToTime(data.path_duration_ms) + "<br>" +
                                 "intersections : " + data.path.length + "<br>" +
                                 "method used: " + method + "<br>" +
                                 "nodes visited: " + data.nodesVisited + "<br>" +
