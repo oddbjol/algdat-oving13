@@ -28,9 +28,9 @@ class Graph{
             if(elements.length == 1)
                 return;
 
-            let id = elements[0];
-            let lat = elements[1];
-            let long = elements[2];
+            let id = parseInt(elements[0]);
+            let lat = parseFloat(elements[1]);
+            let long = parseFloat(elements[2]);
             _this.addNode(id, lat, long);
         });
         lineReader.on('close',function(){
@@ -45,9 +45,9 @@ class Graph{
                 if(elements.length == 1)
                     return;
 
-                let from = elements[0];
-                let to = elements[1];
-                let weight = elements[2];
+                let from = parseInt(elements[0]);
+                let to = parseInt(elements[1]);
+                let weight = parseInt(elements[2]);
                 _this.addEdge(from, to, weight);
             });
 
@@ -62,7 +62,7 @@ class Graph{
                     if(elements.length == 1)
                         return;
 
-                    _this.pointsOfInterest[elements[2]] = elements[0];
+                    _this.pointsOfInterest[elements[2]] = parseInt(elements[0]);
                 });
 
                 lineReader3.on('close',function(){
