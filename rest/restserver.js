@@ -76,7 +76,7 @@ server.post('rest/getpath',function(req, res, next){
     time = process.hrtime(time);
     time = parseFloat(time.toString().replace(',','.')).toFixed(3);
 
-    res.send({path: path, nodesVisited: g.nodesVisited(), time: time});
+    res.send({path: path.path, path_duration_ms: path.path_duration_ms, nodesVisited: g.nodesVisited(), time: time});
     return next();
 });
 

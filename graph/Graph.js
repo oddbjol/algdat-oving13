@@ -117,7 +117,7 @@ class Graph{
             }
         }
 
-        return Graph._getPath(target_node);
+        return {path: Graph._getPath(target_node), path_duration_ms: target_node.dist};
     }
 
     AStar(from_node_id, to_node_id){
@@ -151,7 +151,7 @@ class Graph{
             }
         }
 
-        return Graph._getPath(target_node);
+        return {path: Graph._getPath(target_node), path_duration_ms: target_node.dist*10};
     }
 
     static _getPath(target_node){

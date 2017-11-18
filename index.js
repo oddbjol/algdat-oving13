@@ -52,10 +52,11 @@ $("#findpath").click(function(){
 
             resetMap();
 
-            let infostring =    "jumps : " + data.path.length + "<br>" +
-                "method used: " + method + "<br>" +
-                "nodes visited: " + data.nodesVisited + "<br>" +
-                "time taken: " + data.time + " s";
+            let infostring =    "route duration: " + msToTime(data.path_duration_ms) + "<br>" +
+                                "intersections : " + data.path.length + "<br>" +
+                                "method used: " + method + "<br>" +
+                                "nodes visited: " + data.nodesVisited + "<br>" +
+                                "processing time: " + data.time + " s";
 
             result_popup = L.popup({autoClose: false, closeOnClick: false}).setLatLng(data.path[0]).setContent(infostring);
             map.addLayer(result_popup);
@@ -123,5 +124,11 @@ function resetMap(){
         map.removeLayer(result_popup);
 }
 
+function msToTime(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
 
-
+    return hours + "h " + minutes + "m " + seconds + "s";
+}
