@@ -10,22 +10,24 @@ goog.require('goog.structs.PriorityQueue');
 
 class Graph{
 
-    constructor(node_file = "", edge_file = "", callback = null) {
+    constructor(node_file = "", edge_file = "", poi_file = "", callback = null) {
         this.nodes = [];
+        this.pointsOfInterest = {};
 
         let _this = this;
 
-        if (!node_file || !edge_file)
+        if (!node_file || !edge_file || !poi_file)
             return;
+
+        console.log("reading node file" + node_file);
 
         let lineReader = readline.createInterface({input: fs.createReadStream(node_file)});
         lineReader.on('line', function(line){
             // Read in nodes
             let elements = line.trim().split(/\s+/);
-            if(elements.length == 1){
-                console.log("Skipping first line");
+            if(elements.length == 1)
                 return;
-            }
+
             let id = elements[0];
             let lat = elements[1];
             let long = elements[2];
@@ -33,15 +35,16 @@ class Graph{
         });
         lineReader.on('close',function(){
 
+            console.log("reading edge file " + edge_file);
+
             let lineReader2 = readline.createInterface({input: fs.createReadStream(edge_file)});
 
             lineReader2.on('line', function(line){
                 // Read in edges
                 let elements = line.trim().split(/\s+/);
-                if(elements.length == 1){
-                    console.log("Skipping first line");
+                if(elements.length == 1)
                     return;
-                }
+
                 let from = elements[0];
                 let to = elements[1];
                 let weight = elements[2];
@@ -50,8 +53,24 @@ class Graph{
 
             lineReader2.on('close',function(){
 
-                if(callback)
-                    callback();
+                let lineReader3 = readline.createInterface({input: fs.createReadStream(poi_file)});
+
+                console.log('reading poi file ' + poi_file);
+
+                lineReader3.on('line', function(line){
+                    let elements = line.trim().split(/\s+/);
+                    if(elements.length == 1)
+                        return;
+
+                    _this.pointsOfInterest[elements[2]] = elements[0];
+                });
+
+                lineReader3.on('close',function(){
+                    if(callback)
+                        callback();
+                });
+
+
             });
         });
     }

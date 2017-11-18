@@ -7,12 +7,14 @@ let g; // the graph
 
 const CONFIG_PROD = {
     nodes: 'graph/noder.txt',
-    edges: 'graph/kanter.txt'
+    edges: 'graph/kanter.txt',
+    pointsOfInterest: 'graph/interessepkt.txt'
 };
 
 const CONFIG_DEBUG = {
     nodes: 'graph/albania-noder.txt',
-    edges: 'graph/albania-kanter.txt'
+    edges: 'graph/albania-kanter.txt',
+    pointsOfInterest: 'graph/albania-interessepkt.txt'
 };
 
 const CONFIG = CONFIG_DEBUG;
@@ -71,7 +73,7 @@ server.get('rest/closestnode/:latlng',function(req,res,next){
 server.listen(80, function(){
     console.log("loading map data...");
 
-    g = new Graph(CONFIG.nodes, CONFIG.edges, function(){
+    g = new Graph(CONFIG.nodes, CONFIG.edges, CONFIG.pointsOfInterest, function(){
         console.log("Done loading map data.");
     });
 });

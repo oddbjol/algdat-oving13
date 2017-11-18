@@ -15,10 +15,15 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(map);
 
 $("#findpath").click(function(){
+    let from_name = $("#from_name").val();
     let from_lat = $("#from_lat").val();
     let from_long = $("#from_long").val();
+
+    let to_name = $("#to_name").val();
     let to_lat = $("#to_lat").val();
     let to_long = $("#to_long").val();
+    
+    let from,to;
 
     $.ajax({
         type: "POST",
@@ -54,9 +59,21 @@ map.on('click', function(e){
 
     $.get('http://localhost/rest/closestnode/' + JSON.stringify([e.latlng.lat,e.latlng.lng]),function(data){
 
-        markerPoints[marker_counter++ % 2] = data;
+        markerPoints[marker_counter % 2] = data;
+        
+        if(markerPoints[0]){
+            $("#from_lat").val(markerPoints[0][0]);
+            $("#from_long").val(markerPoints[0][1]);
+        }
+        if(markerPoints[1]){
+            $("#to_lat").val(markerPoints[1][0]);
+            $("#to_long").val(markerPoints[1][1]);
+        }
+
 
         drawMarkers();
+        
+        marker_counter++;
     });
 
 });
