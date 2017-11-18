@@ -101,6 +101,9 @@ class Graph{
         while(!queue.isEmpty()){
             let node = queue.dequeue();
 
+            if(node.id == target_node.id)
+                break;
+
             for(let edge of node.edges){
                 let neighbour = edge.target;
                 if(+node.dist + +edge.weight < neighbour.dist){
