@@ -44,7 +44,7 @@ server.use(restify.plugins.bodyParser({
 }));
 
 server.post('rest/getpath',function(req, res, next){
-    console.log("request body: " + JSON.stringify(req.body));
+    console.log("getpath called with body: " + JSON.stringify(req.body));
     let from = req.body.from;
     let to = req.body.to;
     let method = req.body.method;
@@ -73,6 +73,8 @@ server.post('rest/getpath',function(req, res, next){
         path = g.AStar(from_index, to_index);
     else return next(false);
 
+    console.log("getpath returning with path length " + path.path.length);
+
     time = process.hrtime(time);
     time = parseFloat(time.toString().replace(',','.')).toFixed(3);
 
@@ -80,17 +82,11 @@ server.post('rest/getpath',function(req, res, next){
     return next();
 });
 
-server.get('rest/getnodes',function(req,res,next){
-    let out = [];
-    for(let i = 0; i < g.nodes.length; i++)
-        out.push([g.nodes[i].lat,g.nodes[i].long]);
-    res.send(out);
-    return next();
-});
-
 server.get('rest/closestnode/:latlng',function(req,res,next){
+    console.log("closestnode called with params: " + JSON.stringify(req.params));
     let latlng = JSON.parse(req.params.latlng);
     let closest_node = g.closestNode(latlng[0],latlng[1]);
+    console.log("closestnode returning with " + [closest_node.lat, closest_node.long]);
     res.send([closest_node.lat, closest_node.long]);
     return next();
 });
