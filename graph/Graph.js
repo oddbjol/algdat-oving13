@@ -25,7 +25,7 @@ class Graph{
         let lineReader = readline.createInterface({input: fs.createReadStream(node_file)});
         lineReader.on('line', function(line){
             // Read in nodes
-            let elements = line.split(' ');
+            let elements = line.trim().split(/\s+/);
             if(elements.length == 1)
                 return;
 
@@ -45,7 +45,7 @@ class Graph{
 
             lineReader2.on('line', function(line){
                 // Read in edges
-                let elements = line.split(' ');
+                let elements = line.trim().split(/\s+/);
                 if(elements.length == 1)
                     return;
 
