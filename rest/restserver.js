@@ -5,7 +5,7 @@ let argv = process.argv.slice(2);
 
 let server = restify.createServer();
 
-let g; //  the graph
+let g; // the graph
 
 const CONFIG_PROD = {
     nodes: 'graph/data/noder.txt',
